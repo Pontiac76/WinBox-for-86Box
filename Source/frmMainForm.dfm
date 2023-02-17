@@ -13,6 +13,7 @@ object WinBoxMain: TWinBoxMain
   Font.Name = 'Tahoma'
   Font.Style = []
   Menu = MainMenu
+  OldCreateOrder = True
   ParentBiDiMode = False
   OnActivate = FormFirstActivate
   OnAfterMonitorDpiChanged = FormAfterMonitorDpiChanged
@@ -132,134 +133,14 @@ object WinBoxMain: TWinBoxMain
         TabOrder = 0
         object tabCPU: TTabSheet
           Caption = 'Gazdag'#233'p processzor'
-          object ChartCPU: TChart
-            Left = 0
-            Top = 0
-            Width = 455
-            Height = 202
-            Legend.CheckBoxes = True
-            Title.Text.Strings = (
-              'A virtu'#225'lis g'#233'pek terhel'#233'se a gazdag'#233'pen')
-            BottomAxis.Automatic = False
-            BottomAxis.AutomaticMaximum = False
-            BottomAxis.AutomaticMinimum = False
-            BottomAxis.Axis.Width = 1
-            BottomAxis.Maximum = 60.000000000000000000
-            BottomAxis.Minimum = 1.000000000000000000
-            BottomAxis.RoundFirstLabel = False
-            BottomAxis.Title.Caption = 'Id'#337' [s]'
-            ClipPoints = False
-            LeftAxis.Automatic = False
-            LeftAxis.AutomaticMaximum = False
-            LeftAxis.AutomaticMinimum = False
-            LeftAxis.Axis.Width = 1
-            LeftAxis.Maximum = 100.000000000000000000
-            LeftAxis.Title.Caption = 'Terhel'#233's [%]'
-            RightAxis.Automatic = False
-            RightAxis.AutomaticMaximum = False
-            RightAxis.AutomaticMinimum = False
-            RightAxis.Visible = False
-            TopAxis.Visible = False
-            View3D = False
-            Align = alClient
-            BevelOuter = bvNone
-            Color = clWindow
-            TabOrder = 0
-            DefaultCanvas = 'TGDIPlusCanvas'
-            PrintMargins = (
-              15
-              28
-              15
-              28)
-            ColorPaletteIndex = 13
-          end
         end
         object tabRAM: TTabSheet
           Caption = 'Gazdag'#233'p mem'#243'ria'
           ImageIndex = 1
-          object ChartRAM: TChart
-            Left = 0
-            Top = 0
-            Width = 455
-            Height = 202
-            Legend.CheckBoxes = True
-            Title.Text.Strings = (
-              'A virtu'#225'lis g'#233'pek mem'#243'ri'#225'ja a gazdag'#233'pen')
-            BottomAxis.Automatic = False
-            BottomAxis.AutomaticMaximum = False
-            BottomAxis.AutomaticMinimum = False
-            BottomAxis.Axis.Width = 1
-            BottomAxis.Maximum = 60.000000000000000000
-            BottomAxis.Minimum = 1.000000000000000000
-            BottomAxis.RoundFirstLabel = False
-            BottomAxis.Title.Caption = 'Id'#337' [s]'
-            ClipPoints = False
-            LeftAxis.Automatic = False
-            LeftAxis.AutomaticMaximum = False
-            LeftAxis.AutomaticMinimum = False
-            LeftAxis.Axis.Width = 1
-            LeftAxis.Maximum = 100.000000000000000000
-            LeftAxis.Title.Caption = 'Terhel'#233's [%]'
-            RightAxis.Automatic = False
-            RightAxis.AutomaticMaximum = False
-            RightAxis.AutomaticMinimum = False
-            RightAxis.Visible = False
-            TopAxis.Visible = False
-            View3D = False
-            Align = alClient
-            BevelOuter = bvNone
-            Color = clWindow
-            TabOrder = 0
-            DefaultCanvas = 'TGDIPlusCanvas'
-            PrintMargins = (
-              15
-              28
-              15
-              28)
-            ColorPaletteIndex = 13
-          end
         end
         object tabVMs: TTabSheet
           Caption = 'Fut'#243' virtu'#225'lis g'#233'pek'
           ImageIndex = 2
-          object ChartVMs: TChart
-            Left = 0
-            Top = 0
-            Width = 455
-            Height = 202
-            Legend.CheckBoxes = True
-            Title.Text.Strings = (
-              'Egyidej'#369'leg fut'#243' virtu'#225'lis g'#233'pek')
-            BottomAxis.Automatic = False
-            BottomAxis.AutomaticMaximum = False
-            BottomAxis.AutomaticMinimum = False
-            BottomAxis.Axis.Width = 1
-            BottomAxis.Maximum = 60.000000000000000000
-            BottomAxis.Minimum = 1.000000000000000000
-            BottomAxis.RoundFirstLabel = False
-            BottomAxis.Title.Caption = 'Id'#337' [s]'
-            ClipPoints = False
-            LeftAxis.Axis.Width = 1
-            LeftAxis.Increment = 1.000000000000000000
-            LeftAxis.Title.Caption = 'Virtu'#225'lis g'#233'pek [db]'
-            RightAxis.Automatic = False
-            RightAxis.AutomaticMaximum = False
-            RightAxis.AutomaticMinimum = False
-            RightAxis.Visible = False
-            TopAxis.Visible = False
-            View3D = False
-            Align = alClient
-            BevelOuter = bvNone
-            Color = clWindow
-            TabOrder = 0
-            DefaultCanvas = 'TGDIPlusCanvas'
-            PrintMargins = (
-              15
-              28
-              15
-              28)
-            ColorPaletteIndex = 13
-          end
         end
       end
       object pnpBottom: TPanel

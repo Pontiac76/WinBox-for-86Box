@@ -16,7 +16,6 @@ object Frame86Box: TFrame86Box
   ParentFont = False
   TabOrder = 0
   OnResize = FrameResize
-  PixelsPerInch = 96
   DesignSize = (
     526
     345)

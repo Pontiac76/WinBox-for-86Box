@@ -25,8 +25,8 @@ interface
 
 uses
   Types, UITypes, Windows, Messages, SysUtils, Classes, Controls, Forms, Graphics,
-  TypInfo, Dialogs, Actions, ActnList, Menus, StdCtrls, ExtCtrls, VclTee.TeeGDIPlus,
-  ComCtrls, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series,
+  TypInfo, Dialogs, Actions, ActnList, Menus, StdCtrls, ExtCtrls, {VclTee.TeeGDIPlus,}
+  ComCtrls, {VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series,}
   BaseImageCollection, ImageCollection, ImageList, ImgList, VirtualImageList,
   GraphUtil, Generics.Collections, u86Box, Vcl.ToolWin, uLang, AppEvnts, frm86Box,
   Vcl.ExtDlgs, frmUpdaterDlg, uCommText, uConfigMgr, System.Win.TaskbarCore,
@@ -82,11 +82,8 @@ type
     tabPerfMon: TTabSheet;
     pgCharts: TPageControl;
     tabCPU: TTabSheet;
-    ChartCPU: TChart;
     tabRAM: TTabSheet;
-    ChartRAM: TChart;
     tabVMs: TTabSheet;
-    ChartVMs: TChart;
     pnpBottom: TPanel;
     pnpRight: TPanel;
     lbHRAM: TLabel;
@@ -397,9 +394,9 @@ type
 
     Taskbar: TTaskbar;
 
-    procedure ResetChart(Chart: TChart);
-    procedure AddSeries(Chart: TChart; AColor: TColor; const FriendlyName: string);
-    procedure AddValue(ASeries: TFastLineSeries; const Value: extended);
+//    procedure ResetChart(Chart: TChart);
+//    procedure AddSeries(Chart: TChart; AColor: TColor; const FriendlyName: string);
+//    procedure AddValue(ASeries: TFastLineSeries; const Value: extended);
 
     function InitTaskbar: TTaskbar;
     procedure UpdateTaskbar(const Progress: integer; const Color: boolean);
@@ -472,7 +469,7 @@ implementation
 uses JclDebug, uProcessMon, uProcProfile, uCommUtil, frmProgSettDlg,
   frmProfSettDlg, frmImportVM, uWinProfile, ShellAPI, frmErrorDialog,
   frmAboutDlg, frmSelectHDD, frmNewFloppy, frmWizardHDD, frmWizardVM,
-  uBaseProfile, frmSplash, dmWinBoxUpd, Themes, VCLTee.TeCanvas, Rtti;
+  uBaseProfile, frmSplash, dmWinBoxUpd, Themes, {VCLTee.TeCanvas,} Rtti;
 
 const
   MaxPoints = 60;
@@ -914,39 +911,39 @@ begin
   end;
 end;
 
-procedure TWinBoxMain.AddSeries(Chart: TChart; AColor: TColor;
-  const FriendlyName: string);
-begin
-  with Chart.AddSeries(TFastLineSeries.Create(Chart)) as TFastLineSeries do begin
-    Title := FriendlyName;
-    Color := AColor;
-    AutoRepaint := true;
-    XValues.Order := loNone;
-    LinePen.OwnerCriticalSection := nil;
-    FastPen := true;
-  end;
-end;
+//procedure TWinBoxMain.AddSeries(Chart: TChart; AColor: TColor;
+//  const FriendlyName: string);
+//begin
+//  with Chart.AddSeries(TFastLineSeries.Create(Chart)) as TFastLineSeries do begin
+//    Title := FriendlyName;
+//    Color := AColor;
+//    AutoRepaint := true;
+//    XValues.Order := loNone;
+//    LinePen.OwnerCriticalSection := nil;
+//    FastPen := true;
+//  end;
+//end;
 
-procedure TWinBoxMain.AddValue(ASeries: TFastLineSeries; const Value: extended);
-var
-  Temp: extended;
-begin
-  with ASeries do begin
-    if Count > MaxPoints then begin
-      Delete(0, ScrollPoints);
-
-      Temp := XValues.Last;
-      GetHorizAxis.SetMinMax(
-        Temp - MaxPoints + ScrollPoints,
-        Temp + ScrollPoints);
-    end;
-
-    if Count = 0 then
-      AddXY(1, Value)
-    else
-      AddXY(XValues.Last + 1, Value);
-  end;
-end;
+//procedure TWinBoxMain.AddValue(ASeries: TFastLineSeries; const Value: extended);
+//var
+//  Temp: extended;
+//begin
+//  with ASeries do begin
+//    if Count > MaxPoints then begin
+//      Delete(0, ScrollPoints);
+//
+//      Temp := XValues.Last;
+//      GetHorizAxis.SetMinMax(
+//        Temp - MaxPoints + ScrollPoints,
+//        Temp + ScrollPoints);
+//    end;
+//
+//    if Count = 0 then
+//      AddXY(1, Value)
+//    else
+//      AddXY(XValues.Last + 1, Value);
+//  end;
+//end;
 
 procedure TWinBoxMain.AppEventsMinimize(Sender: TObject);
 begin
@@ -975,20 +972,20 @@ begin
              ListClick(List);
              pgCharts.ActivePageIndex := Tag;
            end;
-        2: if PrintDialog.Execute then
-             (pgCharts.Pages[Tag].Controls[0] as TChart).Print;
-        3: if SaveBmp.Execute then
-             (pgCharts.Pages[Tag].Controls[0] as TChart).SaveToBitmapFile(SaveBmp.FileName);
-        4: if SaveEmf.Execute then
-             with pgCharts.Pages[Tag].Controls[0] as TChart do begin
-               if LowerCase(ExtractFileExt(SaveEmf.FileName)) = '.wmf' then
-                 SaveToMetafile(SaveEmf.FileName)
-               else
-                 SaveToMetafileEnh(SaveEmf.FileName);
-             end;
+//        2: if PrintDialog.Execute then
+//             (pgCharts.Pages[Tag].Controls[0] as TChart).Print;
+//        3: if SaveBmp.Execute then
+//             (pgCharts.Pages[Tag].Controls[0] as TChart).SaveToBitmapFile(SaveBmp.FileName);
+//        4: if SaveEmf.Execute then
+//             with pgCharts.Pages[Tag].Controls[0] as TChart do begin
+//               if LowerCase(ExtractFileExt(SaveEmf.FileName)) = '.wmf' then
+//                 SaveToMetafile(SaveEmf.FileName)
+//               else
+//                 SaveToMetafileEnh(SaveEmf.FileName);
+//             end;
 
-        -1: if PrintDialog.Execute then
-             (pgCharts.ActivePage.Controls[0] as TChart).Print;
+//        -1: if PrintDialog.Execute then
+//             (pgCharts.ActivePage.Controls[0] as TChart).Print;
       end;
   end;
 end;
@@ -1125,26 +1122,26 @@ const
   TitleColors: array [boolean] of TColor = (clHighlight, clBlue);
   BkColors: array [boolean] of TColor = (clBtnFace, clWindow);
 
-  procedure ProcessChart(Chart: TChart);
-  begin
-    with Chart do begin
-      Color := BkColor;
-      Legend.Color := BkColor;
-
-      Frame.Color := TextColor;
-      Legend.Font.Color := TextColor;
-      Legend.Frame.Color := TextColor;
-      LeftAxis.LabelsFont.Color := TextColor;
-      BottomAxis.LabelsFont.Color := TextColor;
-      LeftAxis.Title.Font.Color := TextColor;
-      BottomAxis.Title.Font.Color := TextColor;
-
-      LeftAxis.Grid.Color := GridColor;
-      BottomAxis.Grid.Color := GridColor;
-
-      Title.Font.Color := TitleColor;
-    end;
-  end;
+//  procedure ProcessChart(Chart: TChart);
+//  begin
+//    with Chart do begin
+//      Color := BkColor;
+//      Legend.Color := BkColor;
+//
+//      Frame.Color := TextColor;
+//      Legend.Font.Color := TextColor;
+//      Legend.Frame.Color := TextColor;
+//      LeftAxis.LabelsFont.Color := TextColor;
+//      BottomAxis.LabelsFont.Color := TextColor;
+//      LeftAxis.Title.Font.Color := TextColor;
+//      BottomAxis.Title.Font.Color := TextColor;
+//
+//      LeftAxis.Grid.Color := GridColor;
+//      BottomAxis.Grid.Color := GridColor;
+//
+//      Title.Font.Color := TitleColor;
+//    end;
+//  end;
 
 begin
   inherited;
@@ -1174,9 +1171,9 @@ begin
     TextColor :=
       StyleServices(Self).GetStyleFontColor(sfTextLabelNormal);
 
-  ProcessChart(ChartCPU);
-  ProcessChart(ChartRAM);
-  ProcessChart(ChartVMs);
+//  ProcessChart(ChartCPU);
+//  ProcessChart(ChartRAM);
+//  ProcessChart(ChartVMs);
 end;
 
 procedure TWinBoxMain.DeleteVM(DeleteFiles: boolean);
@@ -1787,8 +1784,8 @@ begin
       BeginUpdate;
       Icons.Clear;
       Clear;
-      ResetChart(ChartCPU);
-      ResetChart(ChartRAM);
+//      ResetChart(ChartCPU);
+//      ResetChart(ChartRAM);
       Add(tabHome.Caption);
       Add(tabPerfMon.Caption);
       for Profile in Profiles do begin
@@ -1809,8 +1806,8 @@ begin
         Icons.Add(Image);
 
         cTemp := RGB(random($100), random($100), random($100));
-        AddSeries(ChartCPU, cTemp, Profile.FriendlyName);
-        AddSeries(ChartRAM, cTemp, Profile.FriendlyName);
+//        AddSeries(ChartCPU, cTemp, Profile.FriendlyName);
+//        AddSeries(ChartRAM, cTemp, Profile.FriendlyName);
       end;
       EndUpdate;
 
@@ -1821,8 +1818,8 @@ begin
 
       ListClick(Sender);
 
-      ResetChart(ChartVMs);
-      AddSeries(ChartVMs, clRed, Pages.Pages[2].Caption);
+//      ResetChart(ChartVMs);
+//      AddSeries(ChartVMs, clRed, Pages.Pages[2].Caption);
 
       JumpList.ValidateRecents(AppModelID,
         function(const AArguments: string): IUnknown
@@ -1892,11 +1889,11 @@ begin
   List.Invalidate;
 end;
 
-procedure TWinBoxMain.ResetChart(Chart: TChart);
-begin
-  Chart.RemoveAllSeries;
-  Chart.Axes.Bottom.Scroll(60 - Chart.Axes.Bottom.Maximum);
-end;
+//procedure TWinBoxMain.ResetChart(Chart: TChart);
+//begin
+//  Chart.RemoveAllSeries;
+//  Chart.Axes.Bottom.Scroll(60 - Chart.Axes.Bottom.Maximum);
+//end;
 
 class procedure TWinBoxMain.SendCommandLine(const Handle: HWND);
 var
@@ -1954,11 +1951,11 @@ begin
 
           Temp := PercentCPU;
           CPU := CPU + Temp;
-          AddValue(ChartCPU.Series[I] as TFastLineSeries, Temp);
+//          AddValue(ChartCPU.Series[I] as TFastLineSeries, Temp);
 
           Temp := PercentRAM;
           RAM := RAM + Temp;
-          AddValue(ChartRAM.Series[I] as TFastLineSeries, Temp);
+//          AddValue(ChartRAM.Series[I] as TFastLineSeries, Temp);
 
           RAMBytes := RAMBytes + BytesOfRAM;
 
@@ -1969,12 +1966,12 @@ begin
           end;
         end
         else begin
-          AddValue(ChartCPU.Series[I] as TFastLineSeries, 0);
-          AddValue(ChartRAM.Series[I] as TFastLineSeries, 0);
+//          AddValue(ChartCPU.Series[I] as TFastLineSeries, 0);
+//          AddValue(ChartRAM.Series[I] as TFastLineSeries, 0);
         end;
       end;
 
-    AddValue(ChartVMs.Series[0] as TFastLineSeries, VMs);
+//    AddValue(ChartVMs.Series[0] as TFastLineSeries, VMs);
 
     lbHRAM.Caption := _T('WinBox.HostRAM', [RAM, FileSizeToStr(RAMBytes, 2)]);
     pbRAM.Position := Round(RAM);
@@ -2162,17 +2159,17 @@ begin
     MissingDiskDlg.Title := _T(StrMissingDiskDlg + '.Title');
     MissingDiskDlg.FooterText := _T(StrMissingDiskDlg + '.FooterText');
 
-    ChartCPU.Title.Text.Text := _T(format(StrChartBase, ['CPU']));
-    ChartCPU.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['CPU', 'X']));
-    ChartCPU.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['CPU', 'Y']));
-
-    ChartRAM.Title.Text.Text := _T(format(StrChartBase, ['RAM']));
-    ChartRAM.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['RAM', 'X']));
-    ChartRAM.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['RAM', 'Y']));
-
-    ChartVMs.Title.Text.Text := _T(format(StrChartBase, ['VMs']));
-    ChartVMs.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['VMs', 'X']));
-    ChartVMs.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['VMs', 'Y']));
+//    ChartCPU.Title.Text.Text := _T(format(StrChartBase, ['CPU']));
+//    ChartCPU.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['CPU', 'X']));
+//    ChartCPU.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['CPU', 'Y']));
+//
+//    ChartRAM.Title.Text.Text := _T(format(StrChartBase, ['RAM']));
+//    ChartRAM.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['RAM', 'X']));
+//    ChartRAM.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['RAM', 'Y']));
+//
+//    ChartVMs.Title.Text.Text := _T(format(StrChartBase, ['VMs']));
+//    ChartVMs.BottomAxis.Title.Caption := _T(format(StrChartAxisBase, ['VMs', 'X']));
+//    ChartVMs.LeftAxis.Title.Caption := _T(format(StrChartAxisBase, ['VMs', 'Y']));
 
     if Assigned(HDSelect) then
       FreeAndNil(HDSelect);
